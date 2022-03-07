@@ -29,7 +29,6 @@ const testApi = () => {
 
 const doPost = (e) => {
     var body = JSON.parse(e.postData.contents);
-    Logger.log(body)
     var payload = bot(body);
     if (Array.isArray(payload)) {
         payloads = payload;
@@ -39,20 +38,7 @@ const doPost = (e) => {
     for (var i = 0; i < payloads.length; i++) {
         payload = payloads[i];
         if (payload) {
-            var handleResponseCallBack = null;
-            var delay = 0;
-            if (payload.callback) {
-                handleResponseCallBack = payload.callback;
-                delete payload.callback;
-            }
-            if (payload.delay) {
-                delay = payload.delay;
-                delete payload.delay;
-            }
             var res = postTelegram(payload);
-            if (handleResponseCallBack) {
-                handleResponseCallBack(res);
-            }
         }
     }
 }
